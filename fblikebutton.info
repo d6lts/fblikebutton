@@ -1,4 +1,6 @@
 ; $Id$
 name = Facebook Like Button
-description = Adds Facebook's "Like" button to each selected node type.
-core = 6.x
+description = "Adds Facebook's <em>Like</em> button to each selected node type."
+core = 7.x
+package = Other
+configure = admin/config/fblikebutton
