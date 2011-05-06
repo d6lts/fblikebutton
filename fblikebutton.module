@@ -11,7 +11,7 @@
  */
 function fblikebutton_menu() {
   $items['admin/settings/fblikebutton'] = array(
-    'title' => 'FB Like settings',
+    'title' => 'FB Like Button',
     'description' => 'Control which content types the "like" button should appear on.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('fblikebutton_admin_settings'),
@@ -26,21 +26,24 @@ function fblikebutton_menu() {
  * Implementation of hook_nodeapi().
  * @todo
  * Add more config options for like button (size, etc).
- * Should $likebutton be wrapped in t()?
  */
 function fblikebutton_nodeapi(&$node, $op, $teaser, $page) {
   global $user;
+  global $base_url;
+  $likebase = $base_url . '/';
+  $likepath = drupal_get_path_alias($_GET['q']);
+  $webpage_to_like = $likebase . $likepath;
   switch ($op) {
     case 'view':
       // Set which node types users can "like".
       $types_to_like = variable_get('fblikebutton_node_types', array('page'));
-      // Replace with drupal_get_path_alias() or something?
-      $likepath = $_SERVER['SCRIPT_URI'];
-      $likepath = urlencode($likepath);
+      $show_faces = variable_get('fblikebutton_show_faces', 'true');
       // Facebook is doing away with FBML, so we use the iframe plugin option instead.
       $likebutton = '<iframe src="http://www.facebook.com/plugins/like.php?href=';
-      $likebutton .= $likepath;
-      $likebutton .= '&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font&amp;colorscheme=light&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:80px;" allowTransparency="true"></iframe>';
+      $likebutton .= urlencode($webpage_to_like);
+      $likebutton .= '&amp;layout=standard&amp;show_faces=';
+      $likebutton .= $show_faces;
+      $likebutton .= '&amp;width=450&amp;action=like&amp;font&amp;colorscheme=light&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:80px;" allowTransparency="true"></iframe>';
       // Keep the fblikebutton button out of search results, etc.
       if (!$page) {
         break;
