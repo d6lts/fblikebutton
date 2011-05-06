@@ -17,13 +17,13 @@ function fblikebutton_admin_settings() {
     '#options' => $fblikebutton_node_options,
     '#default_value' => variable_get('fblikebutton_node_types', array('page')),
     '#description' => t('Each of these content types will have the "like" button automatically added to them.'),
-  );/**
+  );
   $form['fblikebutton_show_faces'] = array(
     '#type' => 'radios',
-    '#title' => t('Display faces in the Like box'),
-    '#options' => array('true' => t('Show faces'), 'false' => t('Do not show faces'))
-    '#default_value' => variable_get('fblikebutton_show_faces', array('true')),
+    '#title' => t('Show faces in the Like box'),
+    '#default_value' => variable_get('fblikebutton_show_faces', 'true'),
+    '#options' => array('true' => t('Show faces'), 'false' => t('Do not show faces')),
     '#description' => t('Should users see the faces of other people who have "liked" the same content?'),
-  ); */
+  );
   return system_settings_form($form);
 }
