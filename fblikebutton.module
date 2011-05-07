@@ -42,20 +42,28 @@ function fblikebutton_nodeapi(&$node, $op, $teaser, $page) {
       $layout = variable_get('fblikebutton_layout', 'standard');
       $action = variable_get('fblikebutton_action', 'like');
       $font = variable_get('fblikebutton_font', 'arial');
+      $iframe_h = variable_get('fblikebutton_iframe_height', '80');
+      $iframe_w = variable_get('fblikebutton_iframe_width', '450');
+      $other_css = variable_get('fblikebutton_iframe_css', '');
+      $other_css = trim($other_css);
       // Facebook is doing away with FBML, so we use the iframe plugin option instead.
-      $likebutton = '<iframe src="https://www.facebook.com/plugins/like.php?href=';
+      $likebutton = '<iframe class="fblikebutton" src="https://www.facebook.com/plugins/like.php?href=';
       $likebutton .= urlencode($webpage_to_like);
       $likebutton .= '&amp;layout=';
-      $likebutton .= $layout;
+      $likebutton .= check_plain($layout);
       $likebutton .= '&amp;show_faces=';
-      $likebutton .= $show_faces;
-      $likebutton .= '&amp;width=450&amp;action=';
-      $likebutton .= $action;
+      $likebutton .= check_plain($show_faces);
+      $likebutton .= '&amp;width=';
+      $likebutton .= check_plain($iframe_w);
+      $likebutton .= '&amp;action=';
+      $likebutton .= check_plain($action);
       $likebutton .= '&amp;font=';
-      $likebutton .= $font;
+      $likebutton .= check_plain($font);
       $likebutton .= '&amp;colorscheme=';
-      $likebutton .= $colorscheme;
-      $likebutton .= '&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:80px;" allowTransparency="true"></iframe>';
+      $likebutton .= check_plain($colorscheme);
+      $likebutton .= '&amp;height=';
+      $likebutton .= check_plain($iframe_w);
+      $likebutton .= '" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:' . check_plain($iframe_w) . 'px; height:' . check_plain($iframe_h) . 'px;' . check_plain($other_css) . '" allowTransparency="true"></iframe>';
       // Keep the fblikebutton button out of search results, etc.
       if (!$page) {
         break;
@@ -95,65 +103,60 @@ function fblikebutton_block($op = 'list', $delta = 0, $edit = array()) {
 
     case 'configure':
       global $base_url;
-      $form = array();
         if ($delta == 0 && user_access('users may administer Like button block')) {
           $form['fblikebutton_block_url'] = array(
-            '#title' => t('Homepage URL'),
+            '#title' => t('URL to display'),
             '#type' => 'textfield',
-            '#default_value' => check_url(variable_get('fblikebutton_block_url', $base_url)),
-            '#description' => t('URL of your homepage to like'),
+            '#default_value' => variable_get('fblikebutton_block_url', $base_url),
+            '#description' => t('URL of the webpage to like (default is the base URL of this site: @site). This value will remain the same throughout your site.', array('@site' => $base_url))
           );
-          $form['block'] = array(
+          $form['fblikebutton_block'] = array(
             '#type' => 'fieldset',
+            '#title' => 'Block configuration',
             '#collapsible' => false,
-            '#collapsed' => false,
-            '#title' => t('Options'),
-            '#description' => '',
           );
-          $form['block']['fblikebutton_bl_layout'] = array(
+          $form['fblikebutton_block']['fblikebutton_bl_layout'] = array(
             '#type' => 'select',
             '#title' => t('Layout style'),
             '#options' => array('standard' => t('Standard'), 'box_count' => t('Box Count'), 'button_count' => t('Button Count')),
             '#default_value' => variable_get('fblikebutton_bl_layout', 'standard'),
-            '#description' => t('Determines the size and amount of social context next to the button'),
+            '#description' => t('Determines the size and amount of social context next to the button.'),
           );
-          $form['block']['fblikebutton_bl_show_faces'] = array(
+          $form['fblikebutton_block']['fblikebutton_bl_show_faces'] = array(
             '#type' => 'select',
             '#title' => t('Display faces in the box'),
             '#options' => array('show' => t('Show faces'), 'hide' => t('Do not show faces')),
             '#default_value' => variable_get('fblikebutton_bl_show_faces', 'show'),
-            '#description' => t('Show profile pictures below the button (ignored if <em>Layout style</em> is set to anything other than <em>Standard</em>)'),
+            '#description' => t('Show profile pictures below the button. Only works if <em>Layout style</em> found above is set to <em>Standard</em> (otherwise, value is ignored).'),
           );
-          $form['block']['fblikebutton_bl_action'] = array(
+          $form['fblikebutton_block']['fblikebutton_bl_action'] = array(
             '#type' => 'select',
             '#title' => t('Verb to display'),
             '#options' => array('like' => t('Like'), 'recommend' => t('Recommend')),
             '#default_value' => variable_get('fblikebutton_bl_action', 'like'),
-            '#description' => t('The verbiage to display inside the button itself'),
+            '#description' => t('The verbiage to display inside the button itself.'),
           );
-          $form['block']['fblikebutton_bl_font'] = array(
-	          '#type' => 'select',
-	          '#title' => t('Font'),
-	          '#options' => array(
-              'arial' => 'Arial',
-	            'lucida+grande' => 'Lucida Grande',
-	            'segoe+ui' => 'Segoe UI',
-	            'tahoma' => 'Tahoma',
-	            'trebuchet+ms' => 'Trebuchet MS',
-	            'verdana' => 'Verdana'
-            ),
-	          '#default_value' => variable_get('fblikebutton_bl_font', 'arial'),
-	          '#description' => t('The font used to display the button'),
+          $form['fblikebutton_block']['fblikebutton_bl_font'] = array(
+            '#type' => 'select',
+            '#title' => t('Font'),
+            '#options' => array('arial' => 'Arial',
+                                'lucida+grande' => 'Lucida Grande',
+                                'segoe+ui' => 'Segoe UI',
+                                'tahoma' => 'Tahoma',
+                                'trebuchet+ms' => 'Trebuchet MS',
+                                'verdana' => 'Verdana'),
+            '#default_value' => variable_get('fblikebutton_bl_font', 'arial'),
+            '#description' => t('The font with which to display the text of the button.'),
           );
-          $form['block']['fblikebutton_bl_color_scheme'] = array(
-	          '#type' => 'select',
-	          '#title' => t('Color scheme'),
-	          '#options' => array('light' => t('Light'), 'dark' => t('Dark')),
-	          '#default_value' => variable_get('fblikebutton_bl_color_scheme', 'light'),
-	          '#description' => t('The color scheme of box environtment'),
+          $form['fblikebutton_block']['fblikebutton_bl_color_scheme'] = array(
+            '#type' => 'select',
+            '#title' => t('Color scheme'),
+            '#options' => array('light' => t('Light'), 'dark' => t('Dark')),
+            '#default_value' => variable_get('fblikebutton_bl_color_scheme', 'light'),
+            '#description' => t('The color scheme of the box environtment.'),
           );
         }
-      return $form;
+        return $form;
 
     case 'save':
       if ($delta == 0) {
@@ -194,7 +197,7 @@ function _fblikebutton_field($addr, $conf) {
   $font = $conf['font'];
   switch ($layout) {
     case "box_count":
-	  $height = 65;
+    $height = 65;
     case "button_count":
       $height = 21;
     case "standard":
