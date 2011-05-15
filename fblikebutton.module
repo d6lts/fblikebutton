@@ -25,30 +25,46 @@ function fblikebutton_menu() {
 
 /**
  * Implementation of hook_nodeapi().
- * @todo
- * Add more config options for like button (size, etc).
  */
 function fblikebutton_nodeapi(&$node, $op, $teaser, $page) {
   global $user, $base_url;
   $likebase = $base_url . '/';
-  $likepath = drupal_get_path_alias($_GET['q']);
+  $likepath = drupal_get_path_alias($node->path);
   $webpage_to_like = $likebase . $likepath;
   switch ($op) {
     case 'view':
       // Set which node types users can "like".
       $types_to_like = variable_get('fblikebutton_node_types', array('page'));
+      // Whether or not to show the faces of people who have "liked" the node.
       $show_faces = variable_get('fblikebutton_show_faces', 'true');
+      // Color scheme of the box. Options: "light" or "dark".
       $colorscheme = variable_get('fblikebutton_color_scheme', 'light');
+      // Layout style. Options: "Standard", "Box Count", or "Button Count".
       $layout = variable_get('fblikebutton_layout', 'standard');
+      // Action to display. Options: "Like" or "Recommend"
       $action = variable_get('fblikebutton_action', 'like');
+      // Font to use.
       $font = variable_get('fblikebutton_font', 'arial');
+      // Iframe height.
       $iframe_h = variable_get('fblikebutton_iframe_height', '80');
+      // Iframe width.
       $iframe_w = variable_get('fblikebutton_iframe_width', '450');
+      // Extra CSS to be tacked on to the end of the iframe. Example: padding-left: 5px; padding-top: 10px;
       $other_css = variable_get('fblikebutton_iframe_css', '');
       $other_css = trim($other_css);
-      // Facebook is doing away with FBML, so we use the iframe plugin option instead.
+
+      // The next part is whether or not to display the "Send" button next to the "Like" (or "Recommend") button.
+      // CURRENTLY ONLY WORKS WITH XFBML (NOT IFRAME)... But it doesn't hurt anything and WILL
+      // be in one of the next stable releases, so I'm leaving it there in case FB decides to enable
+      // the feature to work with the iframe version. Until then, or until next stable release, see dev snapshot
+      // if you require the "Send" button.
+      $displaysend = variable_get('fblikebutton_send', 'true');
+
+      // Since we're currently using the iframe version...
       $likebutton = '<iframe class="fblikebutton" src="https://www.facebook.com/plugins/like.php?href=';
       $likebutton .= urlencode($webpage_to_like);
+      $likebutton .= '&amp;send=';
+      $likebutton .= check_plain($displaysend);
       $likebutton .= '&amp;layout=';
       $likebutton .= check_plain($layout);
       $likebutton .= '&amp;show_faces=';
@@ -64,23 +80,32 @@ function fblikebutton_nodeapi(&$node, $op, $teaser, $page) {
       $likebutton .= '&amp;height=';
       $likebutton .= check_plain($iframe_w);
       $likebutton .= '" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:' . check_plain($iframe_w) . 'px; height:' . check_plain($iframe_h) . 'px;' . check_plain($other_css) . '" allowTransparency="true"></iframe>';
-      // Keep the fblikebutton button out of search results, etc.
-      if (!$page) {
-        break;
+      // Keep the fblikebutton button out of search results, teasers, etc., if set.
+      $fblikebutton_showonteasers = variable_get('fblikebutton_showonteasers', 0);
+      if ($fblikebutton_showonteasers == 0) {
+        if (!$page) {
+          break;
+        }
       }
       // Do not add the like button to any of the unchecked node types.
       if (!in_array($node->type, $types_to_like, TRUE)) {
         break;
       }
-      // Set permissions, and keep the button out of teasers. Otherwise, there
-      // would be 50 "like" buttons on the front page of some sites... Not good.
-      if (!$teaser && user_access('users may access Like button')) {
+      // Check permissions, declare weight:
+      if (user_access('users may access Like button')) {
+        $likebutton_weight = variable_get('fblikebutton_weight', '0');
+        // If set, keep the button out of teasers:
+        if ($fblikebutton_showonteasers == 0) {
+          if ($teaser) {
+            break;
+          }
+        }
         $node->content['fblikebutton_button'] = array(
             '#value' => $likebutton,
-            '#weight' => 100,
+            '#weight' => $likebutton_weight,
         );
+        break;
       }
-      break;
   }
 }
 
