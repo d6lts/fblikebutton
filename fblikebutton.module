@@ -55,7 +55,7 @@ function fblikebutton_node_view($node, $view_mode) {
   $full = ($view_mode == 'full') ? TRUE : FALSE;
   $show = ( ! empty($types[$node->type]) && user_access('access fblikebutton'));
   $likebase = $base_url . '/';
-  $likepath = drupal_get_path_alias($node->uri['path']);
+  $likepath = drupal_get_path_alias(isset($node->uri) ? $node->uri['path'] : sprintf('node/%u', $node->nid));
   $webpage_to_like = $likebase . $likepath;
   $likebutton_weight = variable_get('fblikebutton_weight', '0');
   $conf = array(
