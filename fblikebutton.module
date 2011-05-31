@@ -78,7 +78,7 @@ function fblikebutton_nodeapi(&$node, $op, $teaser, $page) {
       $likebutton .= '&amp;colorscheme=';
       $likebutton .= check_plain($colorscheme);
       $likebutton .= '&amp;height=';
-      $likebutton .= check_plain($iframe_w);
+      $likebutton .= check_plain($iframe_h);
       $likebutton .= '" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:' . check_plain($iframe_w) . 'px; height:' . check_plain($iframe_h) . 'px;' . check_plain($other_css) . '" allowTransparency="true"></iframe>';
       // Keep the fblikebutton button out of search results, teasers, etc., if set.
       $fblikebutton_showonteasers = variable_get('fblikebutton_showonteasers', 0);
