@@ -150,8 +150,8 @@ function fblikebutton_block($op = 'list', $delta = 0, $edit = array()) {
           $form['fblikebutton_block']['fblikebutton_bl_show_faces'] = array(
             '#type' => 'select',
             '#title' => t('Display faces in the box'),
-            '#options' => array('show' => t('Show faces'), 'hide' => t('Do not show faces')),
-            '#default_value' => variable_get('fblikebutton_bl_show_faces', 'show'),
+            '#options' => array('showz' => t('Show faces'), 'hide' => t('Do not show faces')),
+            '#default_value' => variable_get('fblikebutton_bl_show_faces', 'true'),
             '#description' => t('Show profile pictures below the button. Only works if <em>Layout style</em> found above is set to <em>Standard</em> (otherwise, value is ignored).'),
           );
           $form['fblikebutton_block']['fblikebutton_bl_action'] = array(
