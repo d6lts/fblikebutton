@@ -33,8 +33,20 @@ function fblikebutton_nodeapi(&$node, $op, $teaser, $page) {
   $webpage_to_like = $likebase . $likepath;
   switch ($op) {
     case 'view':
+      // Whether to show faces in the iframe. (Thanks to dizarter for pointing out that the next few lines should be relocated to where they are now.)
+      $fblikebutton_showonteasers = variable_get('fblikebutton_showonteasers', 0);
       // Set which node types users can "like".
       $types_to_like = variable_get('fblikebutton_node_types', array('page'));
+      // Keep the fblikebutton button out of search results, teasers, etc., if set.
+      if ($fblikebutton_showonteasers == 0) {
+        if (!$page) {
+          break;
+        }
+      }
+      // Do not add the like button to any of the unchecked node types.
+      if (!in_array($node->type, $types_to_like, TRUE)) {
+        break;
+      }
       // Whether or not to show the faces of people who have "liked" the node.
       $show_faces = variable_get('fblikebutton_show_faces', 'true');
       // Color scheme of the box. Options: "light" or "dark".
@@ -52,6 +64,8 @@ function fblikebutton_nodeapi(&$node, $op, $teaser, $page) {
       // Extra CSS to be tacked on to the end of the iframe. Example: padding-left: 5px; padding-top: 10px;
       $other_css = variable_get('fblikebutton_iframe_css', '');
       $other_css = trim($other_css);
+      // Weight on the node
+      $likebutton_weight = variable_get('fblikebutton_weight', '0');
 
       // The next part is whether or not to display the "Send" button next to the "Like" (or "Recommend") button.
       // CURRENTLY ONLY WORKS WITH XFBML (NOT IFRAME)... But it doesn't hurt anything and WILL
@@ -61,39 +75,10 @@ function fblikebutton_nodeapi(&$node, $op, $teaser, $page) {
       $displaysend = variable_get('fblikebutton_send', 'true');
 
       // Since we're currently using the iframe version...
-      $likebutton = '<iframe class="fblikebutton" src="https://www.facebook.com/plugins/like.php?href=';
-      $likebutton .= urlencode($webpage_to_like);
-      $likebutton .= '&amp;send=';
-      $likebutton .= check_plain($displaysend);
-      $likebutton .= '&amp;layout=';
-      $likebutton .= check_plain($layout);
-      $likebutton .= '&amp;show_faces=';
-      $likebutton .= check_plain($show_faces);
-      $likebutton .= '&amp;width=';
-      $likebutton .= check_plain($iframe_w);
-      $likebutton .= '&amp;action=';
-      $likebutton .= check_plain($action);
-      $likebutton .= '&amp;font=';
-      $likebutton .= check_plain($font);
-      $likebutton .= '&amp;colorscheme=';
-      $likebutton .= check_plain($colorscheme);
-      $likebutton .= '&amp;height=';
-      $likebutton .= check_plain($iframe_h);
-      $likebutton .= '" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:' . check_plain($iframe_w) . 'px; height:' . check_plain($iframe_h) . 'px;' . check_plain($other_css) . '" allowTransparency="true"></iframe>';
-      // Keep the fblikebutton button out of search results, teasers, etc., if set.
-      $fblikebutton_showonteasers = variable_get('fblikebutton_showonteasers', 0);
-      if ($fblikebutton_showonteasers == 0) {
-        if (!$page) {
-          break;
-        }
-      }
-      // Do not add the like button to any of the unchecked node types.
-      if (!in_array($node->type, $types_to_like, TRUE)) {
-        break;
-      }
-      // Check permissions, declare weight:
+      $likebutton = '<iframe class="fblikebutton" src="https://www.facebook.com/plugins/like.php?href=' . urlencode($webpage_to_like) . '&amp;send=' . check_plain($displaysend) . '&amp;layout=' . check_plain($layout) . '&amp;show_faces=' . check_plain($show_faces) . '&amp;width=' . check_plain($iframe_w) . '&amp;action=' . check_plain($action) . '&amp;font=' . check_plain($font) . '&amp;colorscheme=' . check_plain($colorscheme) . '&amp;height=' . check_plain($iframe_h) . '" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:' . check_plain($iframe_w) . 'px; height:' . check_plain($iframe_h) . 'px;' . check_plain($other_css) . '" allowTransparency="true"></iframe>';
+
+      // Check permissions
       if (user_access('users may access Like button')) {
-        $likebutton_weight = variable_get('fblikebutton_weight', '0');
         // If set, keep the button out of teasers:
         if ($fblikebutton_showonteasers == 0) {
           if ($teaser) {
