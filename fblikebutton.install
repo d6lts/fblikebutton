@@ -19,6 +19,7 @@ function fblikebutton_uninstall() {
   variable_del('fblikebutton_iframe_height');
   variable_del('fblikebutton_iframe_width');
   variable_del('fblikebutton_iframe_css');
+  variable_del('fblikebutton_language');
   variable_del('fblikebutton_displaysend');
   variable_del('fblikebutton_font');
   variable_del('fblikebutton_weight');
@@ -34,4 +35,5 @@ function fblikebutton_uninstall() {
   variable_del('fblikebutton_bl_iframe_width');
   variable_del('fblikebutton_bl_iframe_height');
   variable_del('fblikebutton_bl_iframe_css');
+  variable_del('fblikebutton_bl_language');
 }
