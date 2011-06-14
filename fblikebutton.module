@@ -65,7 +65,7 @@ function fblikebutton_nodeapi(&$node, $op, $teaser, $page) {
       $other_css = variable_get('fblikebutton_iframe_css', '');
       $other_css = trim($other_css);
       // Weight on the node
-      $likebutton_weight = variable_get('fblikebutton_weight', '0');
+      $likebutton_weight = variable_get('fblikebutton_weight', '50');
 
       // The next part is whether or not to display the "Send" button next to the "Like" (or "Recommend") button.
       // CURRENTLY ONLY WORKS WITH XFBML (NOT IFRAME)... But it doesn't hurt anything and WILL
