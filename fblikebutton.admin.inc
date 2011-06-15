@@ -10,6 +10,9 @@
  * Configure which node types can be "liked" by users.
  */
 function fblikebutton_admin_settings() {
+  global $language;
+  $lang_abbr = $language->language;
+  $fblikebutton_lang = $lang_abbr . '_' . drupal_strtoupper($lang_abbr);
   $fblikebutton_node_options = node_get_types('names');
   $form['fblikebutton_node_types'] = array(
     '#type' => 'checkboxes',
@@ -95,6 +98,12 @@ function fblikebutton_admin_settings() {
     '#title' => t('Weight'),
     '#default_value' => variable_get('fblikebutton_weight', '50'),
     '#description' => t('The weight determines where on a node the like button will appear. The larger the weight, the lower it will appear on the node. For example, if you want the button to appear more toward the top of the node, choose <em>-40</em> as opposed to <em>-39, -38, 0, 1,</em> or <em>50,</em> etc.'),
-    );
+  );
+  $form['fblikebutton_language'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Language'),
+    '#default_value' => variable_get('fblikebutton_language', $fblikebutton_lang),
+    '#description' => t('Specific language to use. Default for this site is <em>@lang</em>. Examples:<br/>French (France): <em>fr_FR</em><br/>French (Canada): <em>fr_CA</em>', array('@lang' => $fblikebutton_lang)),
+  );
   return system_settings_form($form);
 }

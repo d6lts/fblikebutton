@@ -22,7 +22,14 @@ function fblikebutton_uninstall() {
   variable_del('fblikebutton_displaysend');
   variable_del('fblikebutton_font');
   variable_del('fblikebutton_weight');
+  variable_del('fblikebutton_language');
   variable_del('fblikebutton_showonteasers');
   variable_del('fblikebutton_xfbml');
   variable_del('fblikebutton_appid');
+  variable_del('fblikebutton_bl_layout');
+  variable_del('fblikebutton_bl_show_faces');
+  variable_del('fblikebutton_bl_action');
+  variable_del('fblikebutton_bl_font');
+  variable_del('fblikebutton_bl_color_scheme');
+  variable_del('fblikebutton_bl_language');
 }
