@@ -56,7 +56,7 @@ function fblikebutton_admin_settings() {
   $form['fblikebutton_show_faces'] = array(
     '#type' => 'select',
     '#title' => t('Display faces in the box'),
-    '#options' => array('show' => t('Show faces'), 'false' => t('Do not show faces')),
+    '#options' => array('true' => t('Show faces'), 'false' => t('Do not show faces')),
     '#default_value' => variable_get('fblikebutton_show_faces', 'true'),
     '#description' => t('Show profile pictures below the button. Only works if <em>Layout style</em> found above is set to <em>Standard</em> (otherwise, value is ignored).'),
   );
