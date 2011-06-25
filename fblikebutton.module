@@ -29,7 +29,7 @@ function fblikebutton_menu() {
 function fblikebutton_nodeapi(&$node, $op, $teaser, $page) {
   global $user, $base_url, $language;
   $likebase = $base_url . '/';
-  $likepath = drupal_get_path_alias($_GET['q']);
+  $likepath = drupal_get_path_alias('node/' . $node->nid);
   $webpage_to_like = $likebase . $likepath;
   $lang_abbr = $language->language;
   $fblikebutton_lang = $lang_abbr . '_' . drupal_strtoupper($lang_abbr);
