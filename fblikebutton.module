@@ -17,7 +17,6 @@ function fblikebutton_menu() {
     'page callback' => 'system_admin_menu_block_page',
     'access arguments' => array('administer fblikebutton'),
     'position' => 'right',
-    'weight' => -20,
     'type' => MENU_NORMAL_ITEM,
     'file' => 'system.admin.inc',
     'file path' => drupal_get_path('module', 'system'),
