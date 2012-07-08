@@ -70,11 +70,13 @@ function fblikebutton_dynamic_settings() {
     '#default_value' => variable_get('fblikebutton_layout', 'standard'),
     '#description' => t('Determines the size and amount of social context next to the button.'),
   );
+  // The actial values passed in from the options will be converted to a boolean
+  // in the validation function, so it doesn't really matter what we use.
   $form['fblikebutton_dynamic_appearance']['fblikebutton_show_faces'] = array(
     '#type' => 'select',
     '#title' => t('Show faces in the box?'),
     '#options' => array('show' => t('Show faces'), 'hide' => t('Do not show faces')),
-    '#default_value' => variable_get('fblikebutton_show_faces', 'show'),
+    '#default_value' => variable_get('fblikebutton_show_faces', TRUE) ? 'show' : 'hide',
     '#description' => t('Show profile pictures below the button. Only works if <em>Layout style</em> (found above) is set to <em>Standard</em> (otherwise, value is ignored).'),
   );
   $form['fblikebutton_dynamic_appearance']['fblikebutton_action'] = array(
@@ -124,6 +126,7 @@ function fblikebutton_dynamic_settings() {
     '#default_value' => variable_get('fblikebutton_language', 'en_US'),
     '#description' => t('Specific language to use. Default is English. Examples:<br/>French (France): <em>fr_FR</em><br/>French (Canada): <em>fr_CA</em>'),
   );
+  $form['#validate'] = array('fblikebutton_config_form_validate');
   return system_settings_form($form);
 }
 
@@ -157,11 +160,13 @@ function fblikebutton_static_settings() {
     '#default_value' => variable_get('fblikebutton_bl_layout', 'standard'),
     '#description' => t('Determines the size and amount of social context next to the button'),
   );
+  // The actial values passed in from the options will be converted to a boolean
+  // in the validation function, so it doesn't really matter what we use.
   $form['fblikebutton_static_block_appearance']['fblikebutton_bl_show_faces'] = array(
     '#type' => 'select',
     '#title' => t('Display faces in the box'),
     '#options' => array('show' => t('Show faces'), 'hide' => t('Do not show faces')),
-    '#default_value' => variable_get('fblikebutton_bl_show_faces', 'show'),
+    '#default_value' => variable_get('fblikebutton_bl_show_faces', TRUE) ? 'show': 'hide',
     '#description' => t('Show profile pictures below the button. Only works with Standard layout'),
   );
   $form['fblikebutton_static_block_appearance']['fblikebutton_bl_action'] = array(
@@ -216,6 +221,19 @@ function fblikebutton_static_settings() {
     '#default_value' => variable_get('fblikebutton_language', 'en_US'),
     '#description' => t('Specific language to use. Default is English. Examples:<br/>French (France): <em>fr_FR</em><br/>French (Canada): <em>fr_CA</em>'),
   );
+  $form['#validate'] = array('fblikebutton_config_form_validate');
   return system_settings_form($form);
 }
 
+/**
+ * Validation handler for fblikebutton_dynamic_settings form.
+ */
+function fblikebutton_config_form_validate($form, &$form_state) {
+  // Convert the show faces options into booleans.
+  if (isset($form_state['values']['fblikebutton_show_faces'])) {
+    $form_state['values']['fblikebutton_show_faces'] = $form_state['values']['fblikebutton_show_faces'] == 'show' ? TRUE : FALSE;
+  }
+  if (isset($form_state['values']['fblikebutton_bl_show_faces'])) {
+    $form_state['values']['fblikebutton_bl_show_faces'] = $form_state['values']['fblikebutton_bl_show_faces'] == 'show' ? TRUE : FALSE;
+  }
+}
