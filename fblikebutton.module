@@ -222,7 +222,7 @@ function _fblikebutton_field($webpage_to_like, $conf) {
 //  $send = $conf['send'];
   $other_css = $conf['other_css'];
   $language = $conf['language'];
-  $params = "href={$webpage_to_like}&layout={$layout}&show_faces={$show_faces}&width={$width}px&font={$font}&height={$height}px&action={$action}&colorscheme={$colorscheme}&locale={$language}";
+  $params = "href={$webpage_to_like}&layout={$layout}&show_faces={$show_faces}&width={$width}&font={$font}&height={$height}&action={$action}&colorscheme={$colorscheme}&locale={$language}";
   $src = htmlentities($params);
   $output = '<iframe src="https://www.facebook.com/plugins/like.php?' . $src . '" scrolling="no" frameborder="0" style="border: none; overflow: hidden; width: ' . $width . 'px; height: ' . $height . 'px;' . $other_css . '" allowTransparency="true"></iframe>';
   return $output;
