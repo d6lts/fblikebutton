@@ -186,7 +186,7 @@ function fblikebutton_block_view($delta = '') {
           'width' => variable_get('fblikebutton_iframe_width', '450'),
           'send' => variable_get('fblikebutton_send', 'true'),
           'other_css' => variable_get('fblikebutton_iframe_css', ''),
-          'language' => variable_get('fblikebutton_bl_language', 'en_US'),
+          'language' => variable_get('fblikebutton_language', 'en_US'),
         );
         $block['content'] = _fblikebutton_field($webpage_to_like, $conf);
       }
@@ -221,7 +221,7 @@ function _fblikebutton_field($webpage_to_like, $conf) {
   $font = $conf['font'];
 //  $send = $conf['send'];
   $other_css = $conf['other_css'];
-  $language = ($conf['language']) ? '&language=' . $conf['language'] : '';
+  $language = ($conf['language']) ? '&locale=' . $conf['language'] : '';
   $params = "href={$webpage_to_like}&layout={$layout}&show_faces={$show_faces}&width={$width}&font={$font}&height={$height}&action={$action}&colorscheme={$colorscheme}{$language}&send=false";
   $src = htmlentities($params);
   $output = '<iframe src="https://www.facebook.com/plugins/like.php?' . $src . '" scrolling="no" frameborder="0" style="border: none; overflow: hidden; width: ' . $width . 'px; height: ' . $height . 'px;' . $other_css . '" allowTransparency="true"></iframe>';
