@@ -4,7 +4,8 @@
 /**
  * @file
  * Adds Facebook's "Like" button to each selected node type.
- * Adds a block with a global static value where users can "Like" the URL set by admins.
+ * Adds a block with a global static value where users can "Like" the URL set by
+ * admins.
  */
 
 /**
@@ -72,7 +73,7 @@ function fblikebutton_node_view($node, $view_mode) {
     'language' => variable_get('fblikebutton_language', 'en_US'),
   );
   if ($show) {
-      
+
   // Content area
     if (($view_mode == 'teaser' && $teaserdisplay == 1) || ($view_mode == 'full' && $fullnodedisplay == 0)) {
       $node->content['fblikebutton_field'] = array(
@@ -138,7 +139,7 @@ function fblikebutton_block_configure($delta = '') {
       '#type' => 'fieldset',
       '#title' => t('Static FB Like button block'),
       '#collapsible' => FALSE,
-    );  
+    );
     $form['fblikebutton_static_block']['fblikebutton_static_config'] = array(
       '#markup' => '<p>' . t('To configure the URL and the appearance of the button go to the ' . l(t('static Like button settings'), 'admin/config/fblikebutton/static') . '. Make sure you set the right permissions on the ' . l(t('permissions page'), 'admin/people/permissions') . '.</p>'),
     );
@@ -148,7 +149,7 @@ function fblikebutton_block_configure($delta = '') {
       '#type' => 'fieldset',
       '#title' => t('Dynamic FB Like button block'),
       '#collapsible' => FALSE,
-    );  
+    );
     $form['fblikebutton_dynamic_block']['fblikebutton_dynamic_config'] = array(
       '#markup' => '<p>' . t('To configure the visibility and the appearance of the button go to the ' . l(t('dynamic Like button settings'), 'admin/config/fblikebutton/dynamic') . '. You can enhance the visibility settings by using the settings on this page. Make sure you set the right permissions on the ' . l(t('permissions page'), 'admin/people/permissions') . '.</p>'),
     );
@@ -226,3 +227,4 @@ function _fblikebutton_field($webpage_to_like, $conf) {
   $output = '<iframe src="https://www.facebook.com/plugins/like.php?' . $src . '" scrolling="no" frameborder="0" style="border: none; overflow: hidden; width: ' . $width . 'px; height: ' . $height . 'px;' . $other_css . '" allowTransparency="true"></iframe>';
   return $output;
 }
+

@@ -43,3 +43,4 @@ function fblikebutton_uninstall() {
   variable_del('fblikebutton_bl_iframe_css');
   variable_del('fblikebutton_bl_language');
 }
+
