@@ -44,3 +44,25 @@ function fblikebutton_uninstall() {
   variable_del('fblikebutton_bl_language');
 }
 
+/**
+ * Change the stored variables for the 'show faces' option to a simple boolean.
+ */
+function fblikebutton_update_7000() {
+  // Update the variables for the dynamic fblikebutton.
+  $faces = variable_get('fblikebutton_show_faces', '');
+  if ($faces == 'show') {
+    variable_set('fblikebutton_show_faces', TRUE);
+  }
+  else if ($faces == 'hide') {
+    variable_set('fblikebutton_show_faces', FALSE);
+  }
+
+  // Update the variables for the static fblikebutton.
+  $faces = variable_get('fblikebutton_bl_show_faces', '');
+  if ($faces == 'show') {
+    variable_set('fblikebutton_bl_show_faces', TRUE);
+  }
+  else if ($faces == 'hide') {
+    variable_set('fblikebutton_bl_show_faces', FALSE);
+  }
+}
