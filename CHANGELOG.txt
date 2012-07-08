@@ -1,6 +1,7 @@
 
 FB Like Button 7.x-2.x, xxxx-xx-xx
 -----------------------------
+by lliss: Add better help text for localization options to the config pages.
 #1668256 by goye2cz: Fixed the broken language setting on the dynamic fblike button.
 by lliss make the send attribute explicit. See iframe code generated at http://developers.facebook.com/docs/reference/plugins/like/ for more info.
 #1570374 by jgtrescazes, Stakcreativa: Fixes the display issue caused by the iframe having 'px' string after the width and height values. Also makes the language parameter optional.
