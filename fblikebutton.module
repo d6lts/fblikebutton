@@ -227,4 +227,3 @@ function _fblikebutton_field($webpage_to_like, $conf) {
   $output = '<iframe src="https://www.facebook.com/plugins/like.php?' . $src . '" scrolling="no" frameborder="0" style="border: none; overflow: hidden; width: ' . $width . 'px; height: ' . $height . 'px;' . $other_css . '" allowTransparency="true"></iframe>';
   return $output;
 }
-
