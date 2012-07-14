@@ -191,7 +191,7 @@ function fblikebutton_block($op = 'list', $delta = 0, $edit = array()) {
           'width' => variable_get('fblikebutton_iframe_width', '450'),
           'send' => variable_get('fblikebutton_send', 'true'),
           'other_css' => variable_get('fblikebutton_iframe_css', ''),
-          'language' => variable_get('fblikebutton_bl_language', 'en_US'),
+          'language' => variable_get('fblikebutton_language', 'en_US'),
         );
         $block['content'] = _fblikebutton_field($webpage_to_like, $conf);
       }

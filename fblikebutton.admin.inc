@@ -220,7 +220,7 @@ function fblikebutton_static_settings() {
   $form['fblikebutton_static_block_appearance']['fblikebutton_bl_language'] = array(
     '#type' => 'textfield',
     '#title' => t('Language'),
-    '#default_value' => variable_get('fblikebutton_language', 'en_US'),
+    '#default_value' => variable_get('fblikebutton_bl_language', 'en_US'),
     '#description' => t('Specific language to use. Default is English. Examples:<br/>French (France): <em>fr_FR</em><br/>French (Canada): <em>fr_CA</em>'),
   );
   $form['#validate'] = array('fblikebutton_config_form_validate');
