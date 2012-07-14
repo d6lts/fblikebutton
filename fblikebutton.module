@@ -62,7 +62,7 @@ function fblikebutton_nodeapi(&$node, $op, $teaser, $page) {
     'layout' => variable_get('fblikebutton_layout', 'standard'),
     'action' => variable_get('fblikebutton_action', 'like'),
     'color_scheme' => variable_get('fblikebutton_color_scheme', 'light'),
-    'show_faces' => variable_get('fblikebutton_show_faces', 'true'),
+    'show_faces' => variable_get('fblikebutton_show_faces', TRUE),
     'font' => variable_get('fblikebutton_font', 'arial'),
     'height' => variable_get('fblikebutton_iframe_height', '80'),
     'width' => variable_get('fblikebutton_iframe_width', '450'),
@@ -97,7 +97,7 @@ function fblikebutton_link($type, $node = NULL, $teaser = FALSE) {
     'layout' => variable_get('fblikebutton_layout', 'standard'),
     'action' => variable_get('fblikebutton_action', 'like'),
     'color_scheme' => variable_get('fblikebutton_color_scheme', 'light'),
-    'show_faces' => variable_get('fblikebutton_show_faces', 'true'),
+    'show_faces' => variable_get('fblikebutton_show_faces', TRUE),
     'font' => variable_get('fblikebutton_font', 'arial'),
     'height' => variable_get('fblikebutton_iframe_height', '80'),
     'width' => variable_get('fblikebutton_iframe_width', '450'),
@@ -185,7 +185,7 @@ function fblikebutton_block($op = 'list', $delta = 0, $edit = array()) {
           'layout' => variable_get('fblikebutton_layout', 'standard'),
           'action' => variable_get('fblikebutton_action', 'like'),
           'color_scheme' => variable_get('fblikebutton_color_scheme', 'light'),
-          'show_faces' => variable_get('fblikebutton_show_faces', 'true'),
+          'show_faces' => variable_get('fblikebutton_show_faces', TRUE),
           'font' => variable_get('fblikebutton_font', 'arial'),
           'height' => variable_get('fblikebutton_iframe_height', '80'),
           'width' => variable_get('fblikebutton_iframe_width', '450'),
@@ -204,7 +204,7 @@ function fblikebutton_block($op = 'list', $delta = 0, $edit = array()) {
           'layout' => variable_get('fblikebutton_bl_layout', "standard"),
           'action' => variable_get('fblikebutton_bl_action', "like"),
           'color_scheme' => variable_get('fblikebutton_bl_color_scheme', "light"),
-          'show_faces' => variable_get('fblikebutton_bl_show_faces', "false"),
+          'show_faces' => variable_get('fblikebutton_bl_show_faces', FALSE),
           'font' => variable_get('fblikebutton_bl_font', "arial"),
           'height' => variable_get('fblikebutton_bl_iframe_height', '80'),
           'width' => variable_get('fblikebutton_bl_iframe_width', '450'),
@@ -226,7 +226,7 @@ function _fblikebutton_field($webpage_to_like, $conf) {
   $layout = $conf['layout'];
   $action = $conf['action'];
   $colorscheme = $conf['color_scheme'];
-  $show_faces = $conf['show_faces'];
+  $show_faces = $conf['show_faces'] ? 'true' : 'false';
   $font = $conf['font'];
 //  $send = $conf['send'];
   $other_css = $conf['other_css'];
