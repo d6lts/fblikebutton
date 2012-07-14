@@ -4,7 +4,8 @@
 /**
  * @file
  * Adds Facebook's "Like" button to each selected node type.
- * Adds a block with a global static value where users can "Like" the URL set by admins.
+ * Adds a block with a global static value where users can "Like" the URL set by
+ * admins.
  */
 
 /**
@@ -119,8 +120,11 @@ function fblikebutton_link($type, $node = NULL, $teaser = FALSE) {
  * Implements of hook_perm().
  */
 function fblikebutton_perm() {
-  return array('administer fblikebutton', 'administer fblikebutton block',
-    'access fblikebutton');
+  return array(
+    'administer fblikebutton',
+    'administer fblikebutton block',
+    'access fblikebutton',
+  );
 }
 
 
@@ -163,7 +167,7 @@ function fblikebutton_block($op = 'list', $delta = 0, $edit = array()) {
         );
       }
       return $form;
-   
+
     case 'view':
       global $base_url;
       $node = node_load(arg(1));
@@ -207,10 +211,10 @@ function fblikebutton_block($op = 'list', $delta = 0, $edit = array()) {
           'other_css' => variable_get('fblikebutton_bl_iframe_css', ''),
           'language' => variable_get('fblikebutton_bl_language', 'en_US'),
         );
-        $block['content'] = _fblikebutton_field($addr, $conf);      
+        $block['content'] = _fblikebutton_field($addr, $conf);
       }
 
-        return $block;
+      return $block;
 
     }
   }
