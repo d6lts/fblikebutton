@@ -124,7 +124,7 @@ function fblikebutton_dynamic_settings() {
     '#type' => 'textfield',
     '#title' => t('Language'),
     '#default_value' => variable_get('fblikebutton_language', 'en_US'),
-    '#description' => t('Specific language to use. Default is English. Examples:<br />French (France): <em>fr_FR</em><br />French (Canada): <em>fr_CA</em><br />. More information can be found at htt    p://developers.facebook.com/docs/internationalization/ and a full XML list can be found at http://www.facebook.com/translations/FacebookLocales.xml'),
+    '#description' => t('Specific language to use. Default is English. Examples:<br />French (France): <em>fr_FR</em><br />French (Canada): <em>fr_CA</em><br />More information can be found at http://developers.facebook.com/docs/internationalization/ and a full XML list can be found at http://www.facebook.com/translations/FacebookLocales.xml'),
   );
   $form['#validate'] = array('fblikebutton_config_form_validate');
   return system_settings_form($form);
@@ -219,7 +219,7 @@ function fblikebutton_static_settings() {
     '#type' => 'textfield',
     '#title' => t('Language'),
     '#default_value' => variable_get('fblikebutton_language', 'en_US'),
-    '#description' => t('Specific language to use. Default is English. Examples:<br />French (France): <em>fr_FR</em><br />French (Canada): <em>fr_CA</em><br />. More information can be found at http://developers.facebook.com/docs/internationalization/ and a full XML list can be found at http://www.facebook.com/translations/FacebookLocales.xml'),
+    '#description' => t('Specific language to use. Default is English. Examples:<br />French (France): <em>fr_FR</em><br />French (Canada): <em>fr_CA</em><br />More information can be found at http://developers.facebook.com/docs/internationalization/ and a full XML list can be found at http://www.facebook.com/translations/FacebookLocales.xml'),
   );
   $form['#validate'] = array('fblikebutton_config_form_validate');
   return system_settings_form($form);
