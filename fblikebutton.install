@@ -47,7 +47,7 @@ function fblikebutton_uninstall() {
 /**
  * Change the stored variables for the 'show faces' option to a simple boolean.
  */
-function fblikebutton_update_7000() {
+function fblikebutton_update_7200() {
   // Update the variables for the dynamic fblikebutton.
   $faces = variable_get('fblikebutton_show_faces', '');
   if ($faces == 'show') {
