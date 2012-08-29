@@ -1,4 +1,0 @@
-; $Id$
-name = Facebook Like Button
-description = Adds Facebook's "Like" button to each selected node type.
-core = 6.x
