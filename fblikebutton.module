@@ -64,7 +64,7 @@ function fblikebutton_node_view($node, $view_mode) {
     'layout' => variable_get('fblikebutton_layout', 'standard'),
     'action' => variable_get('fblikebutton_action', 'like'),
     'color_scheme' => variable_get('fblikebutton_color_scheme', 'light'),
-    'show_faces' => variable_get('fblikebutton_show_faces', TRUE),
+    'show_faces' => variable_get('fblikebutton_show_faces', 'true'),
     'font' => variable_get('fblikebutton_font', 'arial'),
     'height' => variable_get('fblikebutton_iframe_height', '80'),
     'width' => variable_get('fblikebutton_iframe_width', '450'),
@@ -119,10 +119,12 @@ function fblikebutton_block_info() {
   $fullnodedisplay = variable_get('fblikebutton_full_node_display', 0);
   $blocks['fblikebutton_static_block'] = array(
     'info' => t('Static FB Like button'),
+    'cache'      => DRUPAL_NO_CACHE,
   );
   if ($fullnodedisplay == 1) {
     $blocks['fblikebutton_dynamic_block'] = array(
       'info' => t('Dynamic FB Like button'),
+      'cache'      => DRUPAL_NO_CACHE,
     );
   }
   return $blocks;
@@ -180,7 +182,7 @@ function fblikebutton_block_view($delta = '') {
           'layout' => variable_get('fblikebutton_layout', 'standard'),
           'action' => variable_get('fblikebutton_action', 'like'),
           'color_scheme' => variable_get('fblikebutton_color_scheme', 'light'),
-          'show_faces' => variable_get('fblikebutton_show_faces', TRUE),
+          'show_faces' => variable_get('fblikebutton_show_faces', 'true'),
           'font' => variable_get('fblikebutton_font', 'arial'),
           'height' => variable_get('fblikebutton_iframe_height', '80'),
           'width' => variable_get('fblikebutton_iframe_width', '450'),
@@ -194,13 +196,13 @@ function fblikebutton_block_view($delta = '') {
     case 'fblikebutton_static_block':
       $addr = variable_get('fblikebutton_block_url', $base_url);
       $conf = array(
-        'layout' => variable_get('fblikebutton_bl_layout', "standard"),
-        'action' => variable_get('fblikebutton_bl_action', "like"),
-        'color_scheme' => variable_get('fblikebutton_bl_color_scheme', "light"),
-        'show_faces' => variable_get('fblikebutton_bl_show_faces', FALSE),
-        'font' => variable_get('fblikebutton_bl_font', "arial"),
-        'height' => variable_get('fblikebutton_bl_iframe_height', '80'),
-        'width' => variable_get('fblikebutton_bl_iframe_width', '450'),
+        'layout' => variable_get('fblikebutton_bl_layout', 'standard'),
+        'action' => variable_get('fblikebutton_bl_action', 'like'),
+        'color_scheme' => variable_get('fblikebutton_bl_color_scheme', 'light'),
+        'show_faces' => variable_get('fblikebutton_bl_show_faces', 'false'),
+        'font' => variable_get('fblikebutton_bl_font', 'arial'),
+        'height' => variable_get('fblikebutton_bl_iframe_height', 80),
+        'width' => variable_get('fblikebutton_bl_iframe_width', 450),
         'other_css' => variable_get('fblikebutton_bl_iframe_css', ''),
         'language' => variable_get('fblikebutton_bl_language', 'en_US'),
       );
@@ -224,6 +226,7 @@ function _fblikebutton_field($webpage_to_like, $conf) {
   $language = ($conf['language']) ? '&locale=' . $conf['language'] : '';
   $params = "href={$webpage_to_like}&layout={$layout}&show_faces={$show_faces}&width={$width}&font={$font}&height={$height}&action={$action}&colorscheme={$colorscheme}{$language}&send=false";
   $src = htmlentities($params);
-  $output = '<iframe src="https://www.facebook.com/plugins/like.php?' . $src . '" scrolling="no" frameborder="0" style="border: none; overflow: hidden; width: ' . $width . 'px; height: ' . $height . 'px;' . $other_css . '" allowTransparency="true"></iframe>';
+  // Facebook removed the protocol from their iframe pattern.
+  $output = '<iframe src="//www.facebook.com/plugins/like.php?' . $src . '" scrolling="no" frameborder="0" style="border: none; overflow: hidden; width: ' . $width . 'px; height: ' . $height . 'px;' . $other_css . '" allowTransparency="true"></iframe>';
   return $output;
 }

@@ -48,13 +48,13 @@ function fblikebutton_dynamic_settings() {
   $form['fblikebutton_dynamic_appearance']['fblikebutton_iframe_width'] = array(
     '#type' => 'textfield',
     '#title' => t('Width of the iframe (px)'),
-    '#default_value' => variable_get('fblikebutton_iframe_width', '450'),
+    '#default_value' => variable_get('fblikebutton_iframe_width', 450),
     '#description' => t('Width of the iframe, in pixels. Default is 450. <em>Note: lower values may crop the output.</em>'),
   );
   $form['fblikebutton_dynamic_appearance']['fblikebutton_iframe_height'] = array(
     '#type' => 'textfield',
     '#title' => t('Height of the iframe (px)'),
-    '#default_value' => variable_get('fblikebutton_iframe_height', '80'),
+    '#default_value' => variable_get('fblikebutton_iframe_height', 80),
     '#description' => t('Height of the iframe, in pixels. Default is 80. <em>Note: lower values may crop the output.</em>'),
   );
   $form['fblikebutton_dynamic_appearance']['fblikebutton_iframe_css'] = array(
@@ -75,8 +75,8 @@ function fblikebutton_dynamic_settings() {
   $form['fblikebutton_dynamic_appearance']['fblikebutton_show_faces'] = array(
     '#type' => 'select',
     '#title' => t('Show faces in the box?'),
-    '#options' => array('show' => t('Show faces'), 'hide' => t('Do not show faces')),
-    '#default_value' => variable_get('fblikebutton_show_faces', TRUE) ? 'show' : 'hide',
+    '#options' => array(TRUE => t('Show faces'), FALSE => t('Do not show faces')),
+    '#default_value' => variable_get('fblikebutton_show_faces', TRUE),
     '#description' => t('Show profile pictures below the button. Only works if <em>Layout style</em> (found above) is set to <em>Standard</em> (otherwise, value is ignored).'),
   );
   $form['fblikebutton_dynamic_appearance']['fblikebutton_action'] = array(
@@ -113,11 +113,9 @@ function fblikebutton_dynamic_settings() {
     '#description' => t('The color scheme of the box environtment.'),
   );
   $form['fblikebutton_dynamic_appearance']['fblikebutton_weight'] = array(
-    '#type' => 'select',
+    '#type' => 'textfield',
     '#title' => t('Weight'),
-    // Note to self: THIS has GOT to change...
-    '#options' => array('-50' => '-50', '-49' => '-49', '-48' => '-48', '-47' => '-47', '-46' => '-46', '-45' => '-45', '-44' => '-44', '-43' => '-43', '-42' => '-42', '-41' => '-41', '-40' => '-40', '-39' => '-39', '-38' => '-38', '-37' => '-37', '-36' => '-36', '-35' => '-35', '-34' => '-34', '-33' => '-33', '-32' => '-32', '-31' => '-31', '-30' => '-30', '-29' => '-29', '-28' => '-28', '-27' => '-27', '-26' => '-26', '-25' => '-25', '-24' => '-24', '-23' => '-23', '-22' => '-22', '-21' => '-21', '-20' => '-20', '-19' => '-19', '-18' => '-18', '-17' => '-17', '-16' => '-16', '-15' => '-15', '-14' => '-14', '-13' => '-13', '-12' => '-12', '-11' => '-11', '-10' => '-10', '-9' => '-9', '-8' => '-8', '-7' => '-7', '-6' => '-6', '-5' => '-5', '-4' => '-4', '-3' => '-3', '-2' => '-2', '-1' => '-1', '0' => '0', '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6', '7' => '7', '8' => '8', '9' => '9', '10' => '10', '11' => '11', '12' => '12', '13' => '13', '14' => '14', '15' => '15', '16' => '16', '17' => '17', '18' => '18', '19' => '19', '20' => '20', '21' => '21', '22' => '22', '23' => '23', '24' => '24', '25' => '25', '26' => '26', '27' => '27', '28' => '28', '29' => '29', '30' => '30', '31' => '31', '32' => '32', '33' => '33', '34' => '34', '35' => '35', '36' => '36', '37' => '37', '38' => '38', '39' => '39', '40' => '40', '41' => '41', '42' => '42', '43' => '43', '44' => '44', '45' => '45', '46' => '46', '47' => '47', '48' => '48', '49' => '49', '50' => '50'),
-    '#default_value' => variable_get('fblikebutton_weight', '50'),
+    '#default_value' => variable_get('fblikebutton_weight', 50),
     '#description' => t('The weight determines where, at the content block, the like button will appear. The larger the weight, the lower it will appear on the node. For example, if you want the button to appear more toward the top of the node, choose <em>-40</em> as opposed to <em>-39, -38, 0, 1,</em> or <em>50,</em> etc. To position the Like button in its own block, go to the ' . l(t('block page'), 'admin/structure/block') . '.'),
     );
   $form['fblikebutton_dynamic_appearance']['fblikebutton_language'] = array(
@@ -136,7 +134,7 @@ function fblikebutton_dynamic_settings() {
 function fblikebutton_static_settings() {
   global $base_url;
   $form['fblikebutton_static_block_description'] = array(
-          '#markup' => '<p>' . t('Set the static URL to like with the button. This Like button will like the given URL, no matter on which page it is displayed. To position this block go the ' . l(t('block page'), 'admin/structure/block') . '.</p>'),
+    '#markup' => '<p>' . t('Set the static URL to like with the button. This Like button will like the given URL, no matter on which page it is displayed. To position this block go the ' . l(t('block page'), 'admin/structure/block') . '.</p>'),
   );
   $form['fblikebutton_static_block_settings'] = array(
     '#type' => 'fieldset',
@@ -165,8 +163,8 @@ function fblikebutton_static_settings() {
   $form['fblikebutton_static_block_appearance']['fblikebutton_bl_show_faces'] = array(
     '#type' => 'select',
     '#title' => t('Display faces in the box'),
-    '#options' => array('show' => t('Show faces'), 'hide' => t('Do not show faces')),
-    '#default_value' => variable_get('fblikebutton_bl_show_faces', TRUE) ? 'show': 'hide',
+    '#options' => array(TRUE => t('Show faces'), FALSE => t('Do not show faces')),
+    '#default_value' => variable_get('fblikebutton_bl_show_faces', TRUE),
     '#description' => t('Show profile pictures below the button. Only works with Standard layout'),
   );
   $form['fblikebutton_static_block_appearance']['fblikebutton_bl_action'] = array(
@@ -200,13 +198,13 @@ function fblikebutton_static_settings() {
   $form['fblikebutton_static_block_appearance']['fblikebutton_bl_iframe_width'] = array(
     '#type' => 'textfield',
     '#title' => t('Width of the iframe (px)'),
-    '#default_value' => variable_get('fblikebutton_bl_iframe_width', '450'),
+    '#default_value' => variable_get('fblikebutton_bl_iframe_width', 450),
     '#description' => t('Width of the iframe, in pixels. Default is 450. <em>Note: lower values may crop the output.</em>'),
   );
   $form['fblikebutton_static_block_appearance']['fblikebutton_bl_iframe_height'] = array(
     '#type' => 'textfield',
     '#title' => t('Height of the iframe (px)'),
-    '#default_value' => variable_get('fblikebutton_bl_iframe_height', '80'),
+    '#default_value' => variable_get('fblikebutton_bl_iframe_height', 80),
     '#description' => t('Height of the iframe, in pixels. Default is 80. <em>Note: lower values may crop the output.</em>'),
   );
   $form['fblikebutton_static_block_appearance']['fblikebutton_bl_iframe_css'] = array(
@@ -229,11 +227,34 @@ function fblikebutton_static_settings() {
  * Validation handler for fblikebutton_dynamic_settings form.
  */
 function fblikebutton_config_form_validate($form, &$form_state) {
-  // Convert the show faces options into booleans.
-  if (isset($form_state['values']['fblikebutton_show_faces'])) {
-    $form_state['values']['fblikebutton_show_faces'] = $form_state['values']['fblikebutton_show_faces'] == 'show' ? TRUE : FALSE;
+  if (isset($form_state['values']['fblikebutton_iframe_width'])) {
+    if ((!is_numeric($form_state['values']['fblikebutton_iframe_width'])) || ($form_state['values']['fblikebutton_iframe_width'] <= 0)) {
+      form_set_error('fblikebutton_iframe_width', t('The width of the like button must be a positive number that is greater than 0 (examples: 201 or 450 or 1024).'));
+    }
   }
-  if (isset($form_state['values']['fblikebutton_bl_show_faces'])) {
-    $form_state['values']['fblikebutton_bl_show_faces'] = $form_state['values']['fblikebutton_bl_show_faces'] == 'show' ? TRUE : FALSE;
+  if (isset($form_state['values']['fblikebutton_iframe_height'])) {
+    if ((!is_numeric($form_state['values']['fblikebutton_iframe_height'])) || ($form_state['values']['fblikebutton_iframe_height'] <= 0)) {
+      form_set_error('fblikebutton_iframe_height', t('The height of the like button must be a positive number that is greater than 0 (examples: 201 or 450 or 1024).'));
+    }
+  }
+  if (isset($form_state['values']['fblikebutton_bl_iframe_width'])) {
+    if ((!is_numeric($form_state['values']['fblikebutton_bl_iframe_width'])) || ($form_state['values']['fblikebutton_bl_iframe_width'] <= 0)) {
+      form_set_error('fblikebutton_bl_iframe_width', t('The width of the like button must be a positive number that is greater than 0 (examples: 201 or 450 or 1024).'));
+    }
+  }
+  if (isset($form_state['values']['fblikebutton_bl_iframe_height'])) {
+    if ((!is_numeric($form_state['values']['fblikebutton_bl_iframe_height'])) || ($form_state['values']['fblikebutton_bl_iframe_height'] <= 0)) {
+      form_set_error('fblikebutton_bl_iframe_height', t('The height of the like button must be a positive number that is greater than 0 (examples: 201 or 450 or 1024).'));
+    }
+  }
+  if (isset($form_state['values']['fblikebutton_weight'])) {
+    if (!is_numeric($form_state['values']['fblikebutton_weight'])) {
+      form_set_error('fblikebutton_weight', t('The weight of the like button must be a number (examples: 50 or -42 or 0).'));
+    }
+  }
+  if (isset($form_state['values']['fblikebutton_bl_weight'])) {
+    if (!is_numeric($form_state['values']['fblikebutton_bl_weight'])) {
+      form_set_error('fblikebutton_bl_weight', t('The weight of the like button must be a number (examples: 50 or -42 or 0).'));
+    }
   }
 }
