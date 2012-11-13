@@ -1,6 +1,8 @@
 
 FB Like Button 7.x-2.x, xxxx-xx-xx
 -----------------------------
+by lliss: make config array generation into a single funciton and fix issue on the admin page for static button language selection.
+#1437354 by kbemelmans and jonhattan - Adding display suite integration.
 by lliss: Add better help text for localization options to the config pages.
 #1668256 by goye2cz: Fixed the broken language setting on the dynamic fblike button.
 by lliss make the send attribute explicit. See iframe code generated at http://developers.facebook.com/docs/reference/plugins/like/ for more info.
