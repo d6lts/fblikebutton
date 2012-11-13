@@ -47,6 +47,30 @@ function fblikebutton_menu() {
 }
 
 /**
+ * Helper function to generate the configuration array used to generate the like
+ * button.
+ */
+function fblikebutton_conf($type = 'dynamic') {
+  $prefix = 'fblikebutton';
+  if ($type == 'static') {
+    $prefix = 'fblikebutton_bl';
+  }
+  $conf = array(
+    'layout' => variable_get($prefix . '_layout', 'standard'),
+    'action' => variable_get($prefix . '_action', 'like'),
+    'color_scheme' => variable_get($prefix . '_color_scheme', 'light'),
+    'show_faces' => variable_get($prefix . '_show_faces', 'true'),
+    'font' => variable_get($prefix . '_font', 'arial'),
+    'height' => variable_get($prefix . '_iframe_height', '80'),
+    'width' => variable_get($prefix . '_iframe_width', '450'),
+    'send' => variable_get($prefix . '_send', 'true'),
+    'other_css' => variable_get($prefix . '_iframe_css', ''),
+    'language' => variable_get($prefix . '_language', 'en_US'),
+  );
+  return $conf;
+}
+
+/**
  * Implements of hook_node_view().
  */
 function fblikebutton_node_view($node, $view_mode) {
@@ -58,18 +82,7 @@ function fblikebutton_node_view($node, $view_mode) {
   $show = ( ! empty($types[$node->type]) && user_access('access fblikebutton'));
   $webpage_to_like = url("node/$node->nid", array('absolute' => TRUE));
   $likebutton_weight = variable_get('fblikebutton_weight', '0');
-  $conf = array(
-    'layout' => variable_get('fblikebutton_layout', 'standard'),
-    'action' => variable_get('fblikebutton_action', 'like'),
-    'color_scheme' => variable_get('fblikebutton_color_scheme', 'light'),
-    'show_faces' => variable_get('fblikebutton_show_faces', 'true'),
-    'font' => variable_get('fblikebutton_font', 'arial'),
-    'height' => variable_get('fblikebutton_iframe_height', '80'),
-    'width' => variable_get('fblikebutton_iframe_width', '450'),
-    'send' => variable_get('fblikebutton_send', 'true'),
-    'other_css' => variable_get('fblikebutton_iframe_css', ''),
-    'language' => variable_get('fblikebutton_language', 'en_US'),
-  );
+  $conf = fblikebutton_conf();
   if ($show) {
     // Content area
     if (($view_mode == 'teaser' && $teaserdisplay == 1) || ($view_mode == 'full' && $fullnodedisplay == 0)) {
@@ -174,34 +187,13 @@ function fblikebutton_block_view($delta = '') {
     case 'fblikebutton_dynamic_block':
       if ($show && $fullnodedisplay == 1) {
         $webpage_to_like = url("node/$node->nid", array('absolute' => TRUE));
-        $conf = array(
-          'layout' => variable_get('fblikebutton_layout', 'standard'),
-          'action' => variable_get('fblikebutton_action', 'like'),
-          'color_scheme' => variable_get('fblikebutton_color_scheme', 'light'),
-          'show_faces' => variable_get('fblikebutton_show_faces', 'true'),
-          'font' => variable_get('fblikebutton_font', 'arial'),
-          'height' => variable_get('fblikebutton_iframe_height', '80'),
-          'width' => variable_get('fblikebutton_iframe_width', '450'),
-          'send' => variable_get('fblikebutton_send', 'true'),
-          'other_css' => variable_get('fblikebutton_iframe_css', ''),
-          'language' => variable_get('fblikebutton_language', 'en_US'),
-        );
+        $conf = fblikebutton_conf();
         $block['content'] = _fblikebutton_field($webpage_to_like, $conf);
       }
       break;
     case 'fblikebutton_static_block':
       $addr = variable_get('fblikebutton_block_url', $base_url);
-      $conf = array(
-        'layout' => variable_get('fblikebutton_bl_layout', 'standard'),
-        'action' => variable_get('fblikebutton_bl_action', 'like'),
-        'color_scheme' => variable_get('fblikebutton_bl_color_scheme', 'light'),
-        'show_faces' => variable_get('fblikebutton_bl_show_faces', 'false'),
-        'font' => variable_get('fblikebutton_bl_font', 'arial'),
-        'height' => variable_get('fblikebutton_bl_iframe_height', 80),
-        'width' => variable_get('fblikebutton_bl_iframe_width', 450),
-        'other_css' => variable_get('fblikebutton_bl_iframe_css', ''),
-        'language' => variable_get('fblikebutton_bl_language', 'en_US'),
-      );
+      $conf = fblikebutton_conf('static');
       $block['content'] = _fblikebutton_field($addr, $conf);
       break;
   }
@@ -243,19 +235,7 @@ function _fblikebutton_ds_field($field) {
   $uri = entity_uri($field['entity_type'], $field['entity']);
   $url = url($uri['path'], array('absolute' => TRUE));
 
-  $conf = array(
-    'layout' => variable_get('fblikebutton_layout', 'standard'),
-    'action' => variable_get('fblikebutton_action', 'like'),
-    'color_scheme' => variable_get('fblikebutton_color_scheme', 'light'),
-    'show_faces' => variable_get('fblikebutton_show_faces', 'true'),
-    'font' => variable_get('fblikebutton_font', 'arial'),
-    'height' => variable_get('fblikebutton_iframe_height', '80'),
-    'width' => variable_get('fblikebutton_iframe_width', '450'),
-    'send' => variable_get('fblikebutton_send', 'true'),
-    'other_css' => variable_get('fblikebutton_iframe_css', ''),
-    'language' => variable_get('fblikebutton_language', 'en_US'),
-  );
-
+  $conf = fblikebutton_conf();
   return _fblikebutton_field($url, $conf);
 }
 
