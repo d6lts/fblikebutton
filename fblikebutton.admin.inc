@@ -86,13 +86,6 @@ function fblikebutton_dynamic_settings() {
     '#default_value' => variable_get('fblikebutton_action', 'like'),
     '#description' => t('The verbiage to display inside the button itself.'),
   );
-/**  $form['fblikebutton_dynamic_appearance']['fblikebutton_displaysend'] = array(
-    '#type' => 'select',
-    '#title' => t('Display <em>send</em> option?'),
-    '#options' => array('true' => t('Display'), 'false' => t('Do not display')),
-    '#default_value' => variable_get('fblikebutton_displaysend', 'false'),
-    '#description' => t('Optionally display the <em>Send</em> button next to the <em>Like/Recommend</em> box.<br/><strong>Note: this feature is currently unavailable from Facebook.</strong> Although setting the value to <em>Display</em> will not hurt anything, the output will not be affected either way.'),
-  ); */
   $form['fblikebutton_dynamic_appearance']['fblikebutton_font'] = array(
     '#type' => 'select',
     '#title' => t('Font'),
