@@ -9,7 +9,7 @@ function template_preprocess_fblikebutton(&$variables) {
   $url = urlencode($variables['url']);
   $language = ($variables['language']) ? '&locale=' . $variables['language'] : '';
   // Ensure we translate the boolean into a string for the url to pass to facebook.
-  $show_faces = $conf['show_faces'] ? 'true' : 'false';
+  $show_faces = $variables['show_faces'] ? 'true' : 'false';
 
   // We run the config src line through htmlentities to avoid rendering trouble
   // when we print to the page.
