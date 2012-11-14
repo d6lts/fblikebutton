@@ -89,12 +89,14 @@ function fblikebutton_dynamic_settings() {
   $form['fblikebutton_dynamic_appearance']['fblikebutton_font'] = array(
     '#type' => 'select',
     '#title' => t('Font'),
-    '#options' => array('arial' => 'Arial',
-                'lucida+grande' => 'Lucida Grande',
-                'segoe+ui' => 'Segoe UI',
-                'tahoma' => 'Tahoma',
-                'trebuchet+ms' => 'Trebuchet MS',
-                'verdana' => 'Verdana'),
+    '#options' => array(
+      'arial' => 'Arial',
+      'lucida+grande' => 'Lucida Grande',
+      'segoe+ui' => 'Segoe UI',
+      'tahoma' => 'Tahoma',
+      'trebuchet+ms' => 'Trebuchet MS',
+      'verdana' => 'Verdana',
+    ),
     '#default_value' => variable_get('fblikebutton_font', 'arial'),
     '#description' => t('The font with which to display the text of the button.'),
   );
