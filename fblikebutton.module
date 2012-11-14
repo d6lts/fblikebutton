@@ -240,7 +240,8 @@ function _fblikebutton_ds_field($field) {
 }
 
 /**
- * Build the like button.
+ * Build the like button. This is essentially just a convienience function that
+ * appends the url to the configuration array.
  */
 function _fblikebutton_field($webpage_to_like, $conf) {
   $conf['url'] = $webpage_to_like;
