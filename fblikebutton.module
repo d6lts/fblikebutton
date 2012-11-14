@@ -243,20 +243,9 @@ function _fblikebutton_ds_field($field) {
  * Build the like button.
  */
 function _fblikebutton_field($webpage_to_like, $conf) {
-  $webpage_to_like = urlencode($webpage_to_like);
-  $width = $conf['width'];
-  $height = $conf['height'];
-  $layout = $conf['layout'];
-  $action = $conf['action'];
-  $colorscheme = $conf['color_scheme'];
-  $show_faces = $conf['show_faces'] ? 'true' : 'false';
-  $font = $conf['font'];
-  $other_css = $conf['other_css'];
-  $language = ($conf['language']) ? '&locale=' . $conf['language'] : '';
-  $params = "href={$webpage_to_like}&layout={$layout}&show_faces={$show_faces}&width={$width}&font={$font}&height={$height}&action={$action}&colorscheme={$colorscheme}{$language}&send=false";
-  $src = htmlentities($params);
-  $output = '<iframe src="//www.facebook.com/plugins/like.php?' . $src . '" scrolling="no" frameborder="0" style="border: none; overflow: hidden; width: ' . $width . 'px; height: ' . $height . 'px;' . $other_css . '" allowTransparency="true"></iframe>';
-  return $output;
+  $conf['url'] = $webpage_to_like;
+  return theme('fblikebutton', $conf);
+}
 
 /**
  * Implements hook_theme().
