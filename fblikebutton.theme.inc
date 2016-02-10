@@ -6,7 +6,6 @@
  * Formats variables and sanitizes data needed to build the like button.
  */
 function template_preprocess_fblikebutton(&$variables) {
-  print_r($variables);
   $url = urlencode($variables['url']);
   $language = ($variables['language']) ? '&locale=' . $variables['language'] : '';
   // Ensure we translate the boolean into a string for the url to pass to
