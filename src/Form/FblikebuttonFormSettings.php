@@ -79,7 +79,7 @@ class FblikebuttonFormSettings extends ConfigFormBase {
     );
     $form['fblikebutton_dynamic_appearance']['fblikebutton_iframe_height'] = array(
       '#type' => 'number',
-      '#title' => $this->t('Height of the iframe (px)'),
+      '#title' => $this->t('Max-height of the iframe (px)'),
       '#default_value' => $config->get('iframe_height'),
       '#description' => $this->t('Height of the iframe, in pixels. Default is 80. <em>Note: lower values may crop the output.</em>'),
     );
@@ -103,7 +103,7 @@ class FblikebuttonFormSettings extends ConfigFormBase {
     $form['fblikebutton_dynamic_appearance']['fblikebutton_show_faces'] = array(
       '#type' => 'select',
       '#title' => $this->t('Show faces in the box?'),
-      '#options' => array(TRUE => $this->t('Show faces'), FALSE => $this->t('Do not show faces')),
+      '#options' => array(t('Do not show faces'), $this->t('Show faces')),
       '#default_value' => $config->get('show_faces', TRUE),
       '#description' => $this->t('Show profile pictures below the button. Only works if <em>Layout style</em> (found above) is set to <em>Standard</em> (otherwise, value is ignored).'),
     );
