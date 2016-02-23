@@ -66,7 +66,7 @@ function fblikebutton_dynamic_settings() {
   $form['fblikebutton_dynamic_appearance']['fblikebutton_layout'] = array(
     '#type' => 'select',
     '#title' => t('Layout style'),
-    '#options' => array('standard' => t('Standard'), 'box_count' => t('Box Count'), 'button_count' => t('Button Count')),
+    '#options' => array('standard' => t('Standard'), 'box_count' => t('Box Count'), 'button_count' => t('Button Count'), 'button' => t('Button')),
     '#default_value' => variable_get('fblikebutton_layout', 'standard'),
     '#description' => t('Determines the size and amount of social context next to the button.'),
   );
@@ -156,7 +156,7 @@ function fblikebutton_static_settings() {
   $form['fblikebutton_static_block_appearance']['fblikebutton_bl_layout'] = array(
     '#type' => 'select',
     '#title' => t('Layout style'),
-    '#options' => array('standard' => t('Standard'), 'box_count' => t('Box Count'), 'button_count' => t('Button Count')),
+    '#options' => array('standard' => t('Standard'), 'box_count' => t('Box Count'), 'button_count' => t('Button Count'), 'button' => t('Button')),
     '#default_value' => variable_get('fblikebutton_bl_layout', 'standard'),
     '#description' => t('Determines the size and amount of social context next to the button'),
   );
