@@ -96,7 +96,8 @@ class FblikebuttonBlock extends BlockBase {
       '#title' => $this->t('Layout style'),
       '#options' => array('standard' => $this->t('Standard'),
                           'box_count' => $this->t('Box Count'),
-                          'button_count' => $this->t('Button Count')),
+                          'button_count' => $this->t('Button Count'),
+                          'button' => $this->t('Button')),
       '#default_value' => $config['layout'],
       '#description' => $this->t('Determines the size and amount of social context next to the button'),
     );

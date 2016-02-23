@@ -3,7 +3,7 @@ node_types:
 full_node_display: 0
 teaser_display: 0
 iframe_width: 450
-iframe_height: 40
+iframe_height: 80
 iframe_css: NULL
 layout: 'standard'
 show_faces: TRUE

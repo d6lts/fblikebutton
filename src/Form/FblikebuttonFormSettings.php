@@ -94,7 +94,8 @@ class FblikebuttonFormSettings extends ConfigFormBase {
       '#title' => $this->t('Layout style'),
       '#options' => array('standard' => $this->t('Standard'),
                           'box_count' => $this->t('Box Count'),
-                          'button_count' => $this->t('Button Count')),
+                          'button_count' => $this->t('Button Count'),
+                          'button' => $this->t('Button')),
       '#default_value' => $config->get('layout'),
       '#description' => $this->t('Determines the size and amount of social context next to the button.'),
     );
@@ -213,9 +214,9 @@ class FblikebuttonFormSettings extends ConfigFormBase {
   }
 
   /**
-   * Clear render cache to make the button appear or disappear
+   * @TODO Clear render cache to make the button use the new configration
    */
   protected function clearCache() {
-    \Drupal::cache('render')->deleteAll();
+    \Drupal::cache('render')->invalidateAll();
   }
 }
