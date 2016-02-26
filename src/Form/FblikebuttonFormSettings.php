@@ -45,6 +45,10 @@ class FblikebuttonFormSettings extends ConfigFormBase {
       '#default_value' => $config->get('node_types'),
       '#description' => $this->t('Each of these content types will have the "like" button automatically added to them.'),
     );
+    /** 
+     * @TODO: Uncomment this when the module is also able to add the button to 
+     * the links area
+     * 
     $form['fblikebutton_dynamic_visibility']['fblikebutton_full_node_display'] = array(
       '#type' => 'radios',
       '#title' => $this->t('Where do you want to show the Like button (full node view)?'),
@@ -55,13 +59,18 @@ class FblikebuttonFormSettings extends ConfigFormBase {
       '#default_value' => $config->get('full_node_display'),
       '#description' => $this->t('If <em>Content area</em> is selected, the button will appear in the same area as the node content. When you select <em>Links area</em> the Like button will be visible in the links area, usually at the bottom of the node (When you select this last option you may want to adjust the Appearance settings). You can also configure Static Like Button Blocks in'. \Drupal::l($this->t('block page'), Url::fromRoute('block.admin_display')) . '.'),
     );
+    */
     $form['fblikebutton_dynamic_visibility']['fblikebutton_teaser_display'] = array(
       '#type' => 'radios',
       '#title' => $this->t('Where do you want to show the Like button on teasers?'),
       '#options' => array(
         $this->t('Don\'t show on teasers'),
         $this->t('Content area'),
-        $this->t('Links area')
+        /**
+         * @TODO: Uncomment this when the module is also able to add the button to 
+         * the links area
+         */
+        //$this->t('Links area')
       ),
       '#default_value' => $config->get('teaser_display'),
       '#description' => $this->t('If you want to show the like button on teasers you can select the display area.'),
