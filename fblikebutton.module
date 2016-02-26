@@ -22,10 +22,9 @@ function fblikebutton_help($route_name, RouteMatchInterface $route_match) {
 }
 
 /**
- * Implements hook_ENTITY_TYPE_view_alter().
+ * Implements hook_ENTITY_TYPE_view().
  */
 function fblikebutton_node_view(array &$build, EntityInterface $node, EntityViewDisplayInterface $display, $view_mode) {
-
   $user = $account = \Drupal::currentUser();
   $config = \Drupal::config('fblikebutton.settings');
 
@@ -34,7 +33,6 @@ function fblikebutton_node_view(array &$build, EntityInterface $node, EntityView
   $teaser_display = $config->get('teaser_display');
   $full = ($view_mode == 'full') ? TRUE : FALSE;
   $show = ($types[$node->getType()]) && $user->hasPermission('access fblikebutton');
-  //$webpage_to_like = \Drupal::url('entity.node.canonical', array('node' => $node->id()), array('absolute' => TRUE));
   $likebutton_weight = $config->get('weight');
 
   if ($show) {
@@ -47,15 +45,23 @@ function fblikebutton_node_view(array &$build, EntityInterface $node, EntityView
         '#url' => $url,
       );
     }
-    // Link area
-    if (($view_mode == 'teaser' && $teaser_display == 2) || ($view_mode == 'full' && $full_node_display == 1)) {
+  }
+}
+
+function hook_node_links_alter(array &$node_links, NodeInterface $node, array &$context)
+{
+  $view_mode = $context['view_mode'];
+  
+  // Link area
+  if (($view_mode == 'teaser' && $teaser_display == 2) || ($view_mode == 'full' && $full_node_display == 1)) {
       $url = fblikebutton_get_node_url($node->id());
-      $build['links']['fblikebutton_field'] = array(
+  }
+  
+  $node_links['fblikebutton_field'] = array(
         '#theme' => 'fblikebutton',
         '#url' => $url,
+        //'#attributes' => array('class' => array('links', 'inline')),
       );
-    }
-  }
 }
 
 /**
