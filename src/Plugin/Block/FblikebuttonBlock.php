@@ -43,12 +43,6 @@ class FblikebuttonBlock extends BlockBase {
     return $values;
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function blockAccess(AccountInterface $account) {
-    return $account->hasPermission('access content');
-  }
 
   /**
    * {@inheritdoc}
@@ -62,8 +56,8 @@ class FblikebuttonBlock extends BlockBase {
       'action' => 'like',
       'font' => 'arial',
       'color_scheme' => 'light',
-      'iframe_width' => 450,
-      'iframe_height' => 40,
+      'iframe_width' => 200,
+      'iframe_height' => 80,
       'iframe_css' => NULL,
       'language' => 'en_US',
     );
@@ -84,7 +78,7 @@ class FblikebuttonBlock extends BlockBase {
     $form['settings']['block_url'] = array(
       '#type' => 'textfield',
       '#default_value' => $config['block_url'],
-      '#description' => $this->t('URL of the page to like (could be your homepage or a facebook page e.g.)<br> You can also specify &lt;current&gt; to establish the button in nodes'),
+      '#description' => $this->t('URL of the page to like (could be your homepage or a facebook page e.g.)<br> You can also specify &lt;current&gt; to establish the url for the current viewed page in your site'),
     );
     $form['appearance'] = array(
       '#type' => 'details',
@@ -142,13 +136,13 @@ class FblikebuttonBlock extends BlockBase {
       '#type' => 'number',
       '#title' => $this->t('Max-width of the iframe (px)'),
       '#default_value' => $config['iframe_width'],
-      '#description' => $this->t('Max-width of the iframe, in pixels. Default is 450.'),
+      '#description' => $this->t('Max-width of the iframe, in pixels. Default is 200.'),
     );
     $form['appearance']['iframe_height'] = array(
       '#type' => 'number',
-      '#title' => $this->t('Height of the iframe (px)'),
+      '#title' => $this->t('Max-height of the iframe (px)'),
       '#default_value' => $config['iframe_height'],
-      '#description' => $this->t('Height of the iframe, in pixels. Default is 80. <em>Note: lower values may crop the output.</em>'),
+      '#description' => $this->t('Max-height of the iframe, in pixels. Default is 80. <em>Note: lower values may crop the output.</em>'),
     );
     $form['appearance']['iframe_css'] = array(
       '#type' => 'textfield',
