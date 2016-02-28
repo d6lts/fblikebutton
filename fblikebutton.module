@@ -111,7 +111,7 @@ function fblikebutton_theme() {
     'fblikebutton' => array(
       'variables' => fblikebutton_conf(),
       'template' => 'fblikebutton',
-      'file' => 'fblikebutton.pages.inc'
+      'file' => 'fblikebutton.theme'
     ),
   );
 }
