@@ -5,6 +5,7 @@ namespace Drupal\fblikebutton\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Url;
 
 /**
  * Provides a Facebook Like Button Block
@@ -22,7 +23,7 @@ class FblikebuttonBlock extends BlockBase {
   */
   public function build() {
 
-    $values = array(
+    $block = array(
       '#theme' => 'fblikebutton',
       '#layout' => $this->configuration['layout'],
       '#show_faces' => $this->configuration['show_faces'],
@@ -35,14 +36,34 @@ class FblikebuttonBlock extends BlockBase {
       '#language' => $this->configuration['language'],
     );
 
-    // If it's not for determined content types
+    // If it's not for the current page
     if($this->configuration['block_url'] != '<current>') {
-      $values['#url'] = $this->configuration['block_url'];
+      $block['#url'] = $this->configuration['block_url'];
+    } else {
+      
+      // Avoid this block to be cached
+      $block['#cache'] = array(
+        'max-age' => 0,
+      );
+      
+      /**
+       * Drupal uses the /node path to refers to the frontpage. That's why facebook
+       * could point to www.example.com/node instead of wwww.example.com.
+       * 
+       * To avoid this, we check if the current path is the frontpage
+       */
+      
+      // Check if the path is pointing home
+      if(\Drupal::routeMatch()->getRouteName() == 'view.frontpage.page_1') {
+        global $base_url;
+        $block['#url'] = $base_url;
+      } else {
+        $block['#url'] = Url::fromRoute('<current>', array(), array('absolute' => true))->toString();
+      }
     }
 
-    return $values;
+    return $block;
   }
-
 
   /**
    * {@inheritdoc}
@@ -132,24 +153,6 @@ class FblikebuttonBlock extends BlockBase {
       '#default_value' => $config['color_scheme'],
       '#description' => $this->t('The color scheme of box environtment'),
     );
-    $form['appearance']['iframe_width'] = array(
-      '#type' => 'number',
-      '#title' => $this->t('Max-width of the iframe (px)'),
-      '#default_value' => $config['iframe_width'],
-      '#description' => $this->t('Max-width of the iframe, in pixels. Default is 200.'),
-    );
-    $form['appearance']['iframe_height'] = array(
-      '#type' => 'number',
-      '#title' => $this->t('Max-height of the iframe (px)'),
-      '#default_value' => $config['iframe_height'],
-      '#description' => $this->t('Max-height of the iframe, in pixels. Default is 80. <em>Note: lower values may crop the output.</em>'),
-    );
-    $form['appearance']['iframe_css'] = array(
-      '#type' => 'textfield',
-      '#title' => $this->t('Extra css styling needed'),
-      '#default_value' => $config['iframe_css'],
-      '#description' => $this->t('Extra css attributes needed to make the iframe behave for your specific requirements. Will not necessarily overwrite existing styling. To alter the dimensions of the iframe, use the height and width fields found above.<br/>Example: <em>float: right; padding: 5px;</em>'),
-    );
     $form['appearance']['language'] = array(
       '#type' => 'textfield',
       '#title' => $this->t('Language'),
@@ -163,22 +166,6 @@ class FblikebuttonBlock extends BlockBase {
   /**
    * {@inheritdoc}
    */
-  public function blockValidate($form, FormStateInterface $form_state) {
-    if (null !== $form_state->getValue('iframe_width')) {
-      if ((!is_numeric($form_state->getValue('iframe_width'))) || ($form_state->getValue('iframe_width') <= 0)) {
-        $form_state->setErrorByName('iframe_width', $this->t('The width of the like button must be a positive number that is greater than 0 (examples: 201 or 450 or 1024).'));
-      }
-    }
-    if (null !== $form_state->getValue('iframe_height')) {
-      if ((!is_numeric($form_state->getValue('iframe_height'))) || ($form_state->getValue('iframe_height') <= 0)) {
-        $form_state->setErrorByName('iframe_height', $this->t('The height of the like button must be a positive number that is greater than 0 (examples: 201 or 450 or 1024).'));
-      }
-    }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function blockSubmit($form, FormStateInterface $form_state) {
     $values = $form_state->getValues();
     $block_url = $values['settings']['block_url'];
@@ -187,9 +174,6 @@ class FblikebuttonBlock extends BlockBase {
     $action = $values['appearance']['action'];
     $font = $values['appearance']['font'];
     $color_scheme = $values['appearance']['color_scheme'];
-    $iframe_width = $values['appearance']['iframe_width'];
-    $iframe_height = $values['appearance']['iframe_height'];
-    $iframe_css = $values['appearance']['iframe_css'];
     $language = $values['appearance']['language'];
 
     $this->configuration['block_url'] = $block_url;
@@ -199,20 +183,6 @@ class FblikebuttonBlock extends BlockBase {
     $this->configuration['action'] = $action;
     $this->configuration['font'] = $font;
     $this->configuration['color_scheme'] = $color_scheme;
-    $this->configuration['iframe_width'] = $iframe_width;
-    $this->configuration['iframe_height'] = $iframe_height;
-    $this->configuration['iframe_css'] = $iframe_css;
     $this->configuration['language'] = $language;
-
-    // Clear render cache
-    $this->clearCache();
   }
-
-  /**
-   * Clear render cache to make the button appear or disappear
-   */
-  protected function clearCache() {
-    \Drupal::cache('render')->deleteAll();
-  }
-
 }

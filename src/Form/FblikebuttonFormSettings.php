@@ -16,7 +16,7 @@ class FblikebuttonFormSettings extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'fblikebutton_dynamic';
+    return 'fblikebutton_settings';
   }
 
   /**
@@ -147,16 +147,6 @@ class FblikebuttonFormSettings extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
-    if (null !== $form_state->getValue('fblikebutton_iframe_width')) {
-      if ((!is_numeric($form_state->getValue('fblikebutton_iframe_width'))) || ($form_state->getValue('fblikebutton_iframe_width') <= 0)) {
-        $form_state->setErrorByName('fblikebutton_iframe_width', $this->t('The width of the like button must be a positive number that is greater than 0 (examples: 201 or 450 or 1024).'));
-      }
-    }
-    if (null !== $form_state->getValue('fblikebutton_iframe_height')) {
-      if ((!is_numeric($form_state->getValue('fblikebutton_iframe_height'))) || ($form_state->getValue('fblikebutton_iframe_height') <= 0)) {
-        $form_state->setErrorByName('fblikebutton_iframe_height', $this->t('The height of the like button must be a positive number that is greater than 0 (examples: 201 or 450 or 1024).'));
-      }
-    }
     if (null != $form_state->getValue('fblikebutton_weight')) {
       if (!is_numeric($form_state->getValue('fblikebutton_weight'))) {
         $form_state->setErrorByName('fblikebutton_bl_weight', $this->t('The weight of the like button must be a number (examples: 50 or -42 or 0).'));
@@ -174,9 +164,6 @@ class FblikebuttonFormSettings extends ConfigFormBase {
     $node_types = $form_state->getValue('fblikebutton_node_types');
     $full_node_display = $form_state->getValue('fblikebutton_full_node_display');
     $teaser_display = $form_state->getValue('fblikebutton_teaser_display');
-    $iframe_width = $form_state->getValue('fblikebutton_iframe_width');
-    $iframe_height = $form_state->getValue('fblikebutton_iframe_height');
-    $iframe_css = $form_state->getValue('fblikebutton_iframe_css');
     $layout = $form_state->getValue('fblikebutton_layout');
     $show_faces = $form_state->getValue('fblikebutton_show_faces');
     $action = $form_state->getValue('fblikebutton_action');
