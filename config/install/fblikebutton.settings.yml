@@ -2,9 +2,6 @@ node_types:
   'article': 'article'
 full_node_display: 0
 teaser_display: 0
-iframe_width: 450
-iframe_height: 80
-iframe_css: NULL
 layout: 'standard'
 show_faces: TRUE
 action: 'like'

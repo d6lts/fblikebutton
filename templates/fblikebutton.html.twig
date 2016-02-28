@@ -15,6 +15,13 @@
  */
 #}
 
-{% autoescape false %}
-<iframe src="//www.facebook.com/v2.5/plugins/like.php?{{ src }}" scrolling="no" frameborder="0" style="border: none; overflow: hidden; max-width: {{ width }}px; max-height: {{ height }}px; {{ other_css }}" allowTransparency="true"></iframe>
-{% endautoescape %}
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/{{ language }}/sdk.js#xfbml=1&version=v2.5";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<div class="fb-like" data-href="{{ url }}" data-layout="{{ layout }}" data-action="{{ action }}" data-show-faces="{{ show_faces }}" data-share="true"></div>

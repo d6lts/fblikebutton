@@ -80,24 +80,6 @@ class FblikebuttonFormSettings extends ConfigFormBase {
       '#title' => $this->t('Appearance settings'),
       '#open' => TRUE,
     );
-    $form['fblikebutton_dynamic_appearance']['fblikebutton_iframe_width'] = array(
-      '#type' => 'number',
-      '#title' => $this->t('Max-width of the iframe (px)'),
-      '#default_value' => $config->get('iframe_width'),
-      '#description' => $this->t('Width of the iframe, in pixels. Default is 450. <em>Note: lower values may crop the output.</em>'),
-    );
-    $form['fblikebutton_dynamic_appearance']['fblikebutton_iframe_height'] = array(
-      '#type' => 'number',
-      '#title' => $this->t('Max-height of the iframe (px)'),
-      '#default_value' => $config->get('iframe_height'),
-      '#description' => $this->t('Height of the iframe, in pixels. Default is 80. <em>Note: lower values may crop the output.</em>'),
-    );
-    $form['fblikebutton_dynamic_appearance']['fblikebutton_iframe_css'] = array(
-      '#type' => 'textfield',
-      '#title' => $this->t('Extra css styling needed'),
-      '#default_value' => $config->get('iframe_css'),
-      '#description' => $this->t('Extra css attributes needed to make the iframe behave for your specific requirements. Will not necessarily overwrite existing styling. To alter the dimensions of the iframe, use the height and width fields found above.<br/>Example: <em>float: right; padding: 5px;</em>'),
-    );
     $form['fblikebutton_dynamic_appearance']['fblikebutton_layout'] = array(
       '#type' => 'select',
       '#title' => $this->t('Layout style'),
@@ -206,9 +188,6 @@ class FblikebuttonFormSettings extends ConfigFormBase {
     $config->set('node_types', $node_types)
           ->set('full_node_display', $full_node_display)
           ->set('teaser_display', $teaser_display)
-          ->set('iframe_width', $iframe_width)
-          ->set('iframe_height', $iframe_height)
-          ->set('iframe_css', $iframe_css)
           ->set('layout', $layout)
           ->set('show_faces', $show_faces)
           ->set('action', $action)
