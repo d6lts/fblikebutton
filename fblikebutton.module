@@ -233,6 +233,6 @@ function _fblikebutton_field($webpage_to_like, $conf) {
   $language = ($conf['language']) ? '&locale=' . $conf['language'] : '';
   $params = "href={$webpage_to_like}&layout={$layout}&show_faces={$show_faces}&width={$width}&font={$font}&height={$height}&action={$action}&colorscheme={$colorscheme}{$language}&send=false";
   $src = htmlentities($params);
-  $output = '<iframe src="https://www.facebook.com/plugins/like.php?' . $src . '" scrolling="no" frameborder="0" style="border: none; overflow: hidden; width: ' . $width . 'px; height: ' . $height . 'px;' . $other_css . '" allowTransparency="true"></iframe>';
+  $output = '<iframe src="https://www.facebook.com/plugins/like.php?' . $src . '" scrolling="no" frameborder="0" style="border: none; overflow: hidden; width: ' . check_plain($width) . 'px; height: ' . check_plain($height) . 'px;' . check_plain($other_css) . '" allowTransparency="true"></iframe>';
   return $output;
 }
